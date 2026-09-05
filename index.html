@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Karla:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    --ink: #16210F;
+    --paper: #F7F4EC;
+    --sage: #DCE8CE;
+    --sage2: #A9C08E;
+    --deep: #26361F;
+    --forest: #0E1A0B;
+    --muted: #61705A;
+    --line: #CBD7BC;
+    --gold: #C2A15B;
+    --accent: #B5643C;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Karla, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--ink); text-decoration: underline; }
+  input, textarea, select, button { font-family: inherit; }
+  @keyframes rrmarq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>
+<meta name="description" content="The Rolling Root — tropical plant service and container gardens for Main Street businesses in downtown Cartersville, Georgia. Storefront planters, interior tropicals, watering routes, and rare houseplants for pickup or local delivery." />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"The Rolling Root","description":"Tropical plant service, container gardens, and rare houseplants for downtown Cartersville, Georgia.","email":"therollingroot@gmail.com","telephone":"+1-470-888-0373","areaServed":{"@type":"City","name":"Cartersville","addressRegion":"GA"},"address":{"@type":"PostalAddress","addressLocality":"Cartersville","addressRegion":"GA","addressCountry":"US"},"sameAs":["https://www.instagram.com/the_rolling_root/"],"priceRange":"$$","knowsAbout":["interior landscaping","container gardens","houseplant maintenance","tropical plants"]}
+</script>
+</helmet>
+
+<div style="min-height:100vh">
+
+  <!-- ── NAV ───────────────────────────────────────── -->
+  <header style="position:sticky;top:0;z-index:40;background:rgba(247,244,236,0.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)">
+    <div style="max-width:1240px;margin:0 auto;padding:10px clamp(20px,4vw,32px);min-height:74px;display:flex;align-items:center;gap:clamp(14px,2vw,32px);flex-wrap:wrap;row-gap:10px">
+      <a href="#top" style="display:flex;flex-direction:column;line-height:1;color:var(--ink)" style-hover="text-decoration:none;color:var(--deep)">
+        <span style="font-family:'DM Serif Display',serif;font-size:25px;letter-spacing:-0.01em;white-space:nowrap">The Rolling Root</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.19em;text-transform:uppercase;color:var(--muted);margin-top:5px">Main Street · Cartersville, GA</span>
+      </a>
+      <nav style="display:flex;flex-wrap:wrap;gap:clamp(14px,1.6vw,26px);margin-left:auto;font-size:14.5px;font-weight:500">
+        <a href="#services" style="color:var(--deep);white-space:nowrap">Services</a>
+        <a href="#mainstreet" style="color:var(--deep);white-space:nowrap">Main Street</a>
+        <a href="#shop" style="color:var(--deep);white-space:nowrap">Tropicals</a>
+        <a href="#find" style="color:var(--deep);white-space:nowrap">Pop-Ups</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button onClick="{{ openDrawer }}" style="position:relative;display:flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;color:var(--deep);cursor:pointer" style-hover="border-color:var(--ink)">
+          Cart
+          <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
+            <span style="min-width:20px;height:20px;border-radius:999px;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 5px">{{ cartCount }}</span>
+          </sc-if>
+        </button>
+        <a href="#contact" style="background:var(--ink);color:var(--paper);border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;white-space:nowrap" style-hover="background:var(--deep);color:var(--paper);text-decoration:none">Get a quote</a>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ showCartBar }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ openDrawer }}" style="position:fixed;left:50%;transform:translateX(-50%);bottom:20px;z-index:45;display:flex;align-items:center;gap:16px;background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:14px 16px 14px 24px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 12px 34px rgba(14,26,11,0.34)" style-hover="background:var(--deep)">
+      <span>{{ cartSummary }}</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);background:rgba(247,244,236,0.1);border-radius:999px;padding:7px 13px">Check out →</span>
+    </button>
+  </sc-if>
+
+  <!-- ── HERO ──────────────────────────────────────── -->
+  <section id="top" data-screen-label="Hero" style="position:relative;background:var(--forest);overflow:hidden">
+    <img src="assets/monstera-wall.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45" />
+    <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(14,26,11,0.94) 0%,rgba(14,26,11,0.82) 46%,rgba(14,26,11,0.42) 100%)"></div>
+    <img src="assets/gold-leaf.webp" alt="" style="position:absolute;right:-6%;top:-12%;width:min(46%,620px);opacity:0.5;transform:rotate(8deg);pointer-events:none" />
+    <div style="position:relative;max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(20px,4vw,32px) clamp(60px,8vw,104px);display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:clamp(36px,5vw,64px);align-items:center">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:28px">
+          <span style="width:26px;height:1px;background:var(--gold)"></span>
+          Downtown Cartersville, Georgia
+        </div>
+        <h1 style="font-family:'DM Serif Display',serif;font-size:clamp(38px,6vw,78px);line-height:0.98;letter-spacing:-0.02em;margin:0 0 26px;color:#fff;text-wrap:balance">Main Street, planted in tropicals.</h1>
+        <p style="font-size:clamp(17px,1.5vw,20px);line-height:1.6;color:#E4EBDC;margin:0 0 14px;max-width:33em;text-wrap:pretty">The Rolling Root is Cartersville's plant service for the businesses downtown — container gardens out front, hanging baskets overhead, and lush tropical greenery inside. Planted, watered, and maintained on a route, so your storefront looks cared for every single day.</p>
+        <p style="font-size:clamp(16px,1.4vw,19px);line-height:1.6;color:var(--sage2);margin:0 0 38px;max-width:33em;text-wrap:pretty">And when the cart rolls out, the rare tropicals come with it.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px">
+          <a href="#contact" style="background:var(--gold);color:var(--forest);border-radius:999px;padding:16px 30px;font-size:16px;font-weight:700" style-hover="background:#fff;color:var(--forest);text-decoration:none">Beautify my storefront</a>
+          <a href="#shop" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.5);border-radius:999px;padding:16px 30px;font-size:16px;font-weight:600" style-hover="background:rgba(255,255,255,0.12);color:#fff;text-decoration:none;border-color:#fff">Shop tropicals</a>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:clamp(18px,3vw,34px);font-size:13.5px;color:var(--sage2);border-top:1px solid rgba(220,232,206,0.24);padding-top:22px;font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em;text-transform:uppercase">
+          <span>Storefront accounts</span>
+          <span>Container gardens</span>
+          <span>Pick-up &amp; delivery</span>
+        </div>
+      </div>
+      <div style="position:relative">
+        <img src="assets/market-cart.jpg" alt="The Rolling Root pop-up, stocked with tropical houseplants" style="position:relative;display:block;width:100%;height:clamp(300px,40vw,540px);object-fit:cover;border-radius:6px;border:1px solid rgba(194,161,91,0.4)" />
+        <div style="position:absolute;left:clamp(-14px,-1vw,0px);bottom:26px;background:var(--paper);border-left:3px solid var(--gold);border-radius:3px;padding:14px 18px;max-width:250px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);margin-bottom:5px">On the route now</div>
+          <div style="font-size:15px;font-weight:600;line-height:1.35;color:var(--ink)">Storefronts and restaurants along Main Street &amp; the Public Square</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MARQUEE ───────────────────────────────────── -->
+  <div style="background:var(--ink);color:var(--gold);overflow:hidden;padding:15px 0;border-top:1px solid rgba(194,161,91,0.3)">
+    <div style="display:flex;width:max-content;animation:rrmarq 34s linear infinite;font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase">
+      <div style="display:flex;gap:38px;padding-right:38px">
+        <span>Container gardens</span><span>·</span><span>Hanging baskets</span><span>·</span><span>Interior tropicals</span><span>·</span><span>Seasonal color</span><span>·</span><span>Watering routes</span><span>·</span><span>Restaurant patios</span><span>·</span><span>Pop-up shops</span><span>·</span>
+      </div>
+      <div style="display:flex;gap:38px;padding-right:38px" aria-hidden="true">
+        <span>Container gardens</span><span>·</span><span>Hanging baskets</span><span>·</span><span>Interior tropicals</span><span>·</span><span>Seasonal color</span><span>·</span><span>Watering routes</span><span>·</span><span>Restaurant patios</span><span>·</span><span>Pop-up shops</span><span>·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SERVICES ──────────────────────────────────── -->
+  <section id="services" data-screen-label="Services" style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,4vw,32px) 40px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:44px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Plant services for downtown</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-0.02em;margin:0;max-width:22em">Every plant on the block, accounted for.</h2>
+      </div>
+      <a href="#contact" style="font-size:15px;font-weight:600;border-bottom:1px solid var(--accent);padding-bottom:3px" style-hover="text-decoration:none;color:var(--ink);border-color:var(--ink)">Request a quote →</a>
+    </div>
+
+    <div style="position:relative;background:var(--deep);color:var(--sage);border-radius:8px;padding:clamp(26px,4vw,52px);display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:clamp(28px,4vw,56px);margin-bottom:20px;overflow:hidden">
+      <img src="assets/green-gold-tropical.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.2" />
+      <div style="position:relative">
+        <div style="display:inline-block;background:var(--gold);color:var(--forest);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;padding:5px 11px;border-radius:3px;margin-bottom:22px">Signature program</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:clamp(26px,3vw,38px);line-height:1.1;margin:0 0 18px;color:#fff">The Main Street Account</h3>
+        <p style="font-size:17.5px;line-height:1.65;margin:0 0 28px;color:#E4EBDC;max-width:34em;text-wrap:pretty">A monthly plant service for your whole storefront — the planters out front, the tropicals inside, the seasonal swaps, and every drop of water in between. Priced per storefront, run on a fixed route, and never your problem again.</p>
+        <div style="display:grid;gap:11px;font-size:15.5px;max-width:30em">
+          <div style="display:flex;gap:12px;align-items:baseline"><span style="color:var(--gold);font-weight:700">—</span><span>Front-of-house container gardens, planted for the season</span></div>
+          <div style="display:flex;gap:12px;align-items:baseline"><span style="color:var(--gold);font-weight:700">—</span><span>Interior tropicals sized and placed for your light</span></div>
+          <div style="display:flex;gap:12px;align-items:baseline"><span style="color:var(--gold);font-weight:700">—</span><span>Early-morning watering route, before you open</span></div>
+          <div style="display:flex;gap:12px;align-items:baseline"><span style="color:var(--gold);font-weight:700">—</span><span>Anything that declines gets replaced, no charge</span></div>
+        </div>
+      </div>
+      <div style="position:relative;border-left:1px solid rgba(194,161,91,0.32);padding-left:clamp(0px,3vw,44px);display:flex;flex-direction:column;justify-content:center">
+        <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Starting at</div>
+          <div style="font-family:'DM Serif Display',serif;font-size:clamp(44px,5vw,60px);line-height:1;color:#fff;margin-bottom:6px">$185<span style="font-family:Karla,sans-serif;font-size:19px;font-weight:500;color:var(--sage2)">/mo</span></div>
+          <div style="font-size:14.5px;color:var(--sage2);margin-bottom:30px">Scoped per storefront. No contract for the first 60 days.</div>
+        </sc-if>
+        <a href="#contact" style="display:block;text-align:center;background:var(--gold);color:var(--forest);border-radius:999px;padding:15px 26px;font-size:15.5px;font-weight:700" style-hover="background:#fff;color:var(--forest);text-decoration:none">Schedule a walkthrough</a>
+        <p style="font-size:13.5px;line-height:1.55;color:var(--sage2);margin:18px 0 0;text-align:center">Free, and it takes about fifteen minutes.</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px;display:flex;flex-direction:column" style-hover="border-color:var(--ink)">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;margin:0 0 12px">Container Gardens &amp; Color Planters</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 22px;flex:1;text-wrap:pretty">Built to your pot, your light, and your storefront's colors. Swapped four times a year so the front of your shop never looks tired.</p>
+        <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink)">From $95 per container</div>
+        </sc-if>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px;display:flex;flex-direction:column" style-hover="border-color:var(--ink)">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;margin:0 0 12px">Hanging Baskets</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 22px;flex:1;text-wrap:pretty">Full, spilling, and hung at the right height. The detail people notice from across the street without knowing why.</p>
+        <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink)">From $65 per basket</div>
+        </sc-if>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px;display:flex;flex-direction:column" style-hover="border-color:var(--ink)">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;margin:0 0 12px">Interior Tropicals</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 22px;flex:1;text-wrap:pretty">Lobbies, dining rooms, salon corners, conference tables. Real tropical plants chosen for the light you actually have — not what looks good in a catalog.</p>
+        <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink)">From $120 installed</div>
+        </sc-if>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px;display:flex;flex-direction:column" style-hover="border-color:var(--ink)">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;margin:0 0 12px">Watering &amp; Maintenance Route</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 22px;flex:1;text-wrap:pretty">Already have plants you love and keep killing? Put them on the route. Pruned, fed, dusted, watered, before you open.</p>
+        <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink)">From $60/mo</div>
+        </sc-if>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px;display:flex;flex-direction:column" style-hover="border-color:var(--ink)">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;margin:0 0 12px">Plant Pick-Up &amp; Delivery</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 22px;flex:1;text-wrap:pretty">Found something you want but can't haul it? It gets sourced, picked up, and set right where it goes.</p>
+        <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink)">From $15 in Bartow County</div>
+        </sc-if>
+      </div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:32px;display:flex;flex-direction:column" style-hover="border-color:var(--ink)">
+        <h3 style="font-family:'DM Serif Display',serif;font-size:26px;line-height:1.15;margin:0 0 12px">Event &amp; Pop-Up Styling</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 22px;flex:1;text-wrap:pretty">Grand openings, weddings, showers, downtown events. Tropical greenery brought in, styled, and hauled back out.</p>
+        <sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:14.5px;font-weight:700;color:var(--ink)">From $250 per event</div>
+        </sc-if>
+      </div>
+      <div style="grid-column:1/-1;background:var(--sage);border:1px solid var(--sage2);border-radius:8px;padding:30px clamp(24px,3vw,36px);display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+        <div>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:27px;line-height:1.15;margin:0 0 8px">Home plants too</h3>
+          <p style="font-size:16px;line-height:1.55;color:var(--deep);margin:0;max-width:44em;text-wrap:pretty">Residential styling runs the same way as a storefront account, just smaller — plants picked for your rooms, potted up, and placed. From $75 a visit.</p>
+        </div>
+        <a href="#contact" style="background:var(--ink);color:var(--paper);border-radius:999px;padding:14px 26px;font-size:15.5px;font-weight:600;white-space:nowrap" style-hover="background:var(--deep);color:var(--paper);text-decoration:none">Ask about my house</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MAIN STREET ───────────────────────────────── -->
+  <section id="mainstreet" data-screen-label="Main Street" style="position:relative;margin-top:clamp(56px,8vw,96px);background:var(--forest);overflow:hidden">
+    <img src="assets/green-gold-tropical.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.28" />
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,26,11,0.9),rgba(14,26,11,0.78))"></div>
+    <div style="position:relative;max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,4vw,32px)">
+      <div style="max-width:44em;margin-bottom:clamp(36px,5vw,56px)">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">Why Main Street</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,50px);line-height:1.04;letter-spacing:-0.02em;margin:0 0 22px;color:#fff;text-wrap:balance">A downtown that looks alive keeps people walking.</h2>
+        <p style="font-size:clamp(16px,1.4vw,18.5px);line-height:1.68;color:#E4EBDC;margin:0;text-wrap:pretty">Cartersville's storefronts sit shoulder to shoulder, so the way one looks changes the way the whole block reads. Full planters and healthy greenery say a place is open, tended, and worth stopping at. That's the entire job: keep the plants on Main Street looking like somebody's watching them. Somebody is.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(18px,2.5vw,26px)">
+        <div style="border-top:1px solid rgba(194,161,91,0.4);padding-top:22px">
+          <div style="font-family:'DM Serif Display',serif;font-size:clamp(34px,3.4vw,44px);line-height:1;color:var(--gold);margin-bottom:10px">4 am</div>
+          <div style="font-size:15.5px;line-height:1.55;color:#E4EBDC">The route starts before the shops open, so nobody sees a hose</div>
+        </div>
+        <div style="border-top:1px solid rgba(194,161,91,0.4);padding-top:22px">
+          <div style="font-family:'DM Serif Display',serif;font-size:clamp(34px,3.4vw,44px);line-height:1;color:var(--gold);margin-bottom:10px">4×</div>
+          <div style="font-size:15.5px;line-height:1.55;color:#E4EBDC">Seasonal swaps a year, so no planter sits past its prime</div>
+        </div>
+        <div style="border-top:1px solid rgba(194,161,91,0.4);padding-top:22px">
+          <div style="font-family:'DM Serif Display',serif;font-size:clamp(34px,3.4vw,44px);line-height:1;color:var(--gold);margin-bottom:10px">Walkable</div>
+          <div style="font-size:15.5px;line-height:1.55;color:#E4EBDC">The whole service area is on foot — no truck fees, no trip charges</div>
+        </div>
+        <div style="border-top:1px solid rgba(194,161,91,0.4);padding-top:22px">
+          <div style="font-family:'DM Serif Display',serif;font-size:clamp(34px,3.4vw,44px);line-height:1;color:var(--gold);margin-bottom:10px">Replaced</div>
+          <div style="font-size:15.5px;line-height:1.55;color:#E4EBDC">Anything that declines on an account gets swapped at no charge</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SHOP ──────────────────────────────────────── -->
+  <section id="shop" data-screen-label="Shop" style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,4vw,32px) 40px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-bottom:40px;flex-wrap:wrap">
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">On the cart this week</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 14px">Tropicals, mostly.</h2>
+        <p style="font-size:17px;line-height:1.6;color:var(--muted);margin:0;max-width:40em;text-wrap:pretty">Rare and hard-to-find tropical houseplants, sourced so you don't have to drive to Atlanta for them. Stock rotates weekly — check out online and choose downtown pickup or local delivery.</p>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:11px 15px">Updated {{ stockDate }}</div>
+    </div>
+
+    <figure style="margin:0 0 30px">
+      <img src="assets/booth-table.jpg" alt="Tropical houseplants lined up on the table at a Rolling Root pop-up" style="display:block;width:100%;height:clamp(150px,17vw,210px);object-fit:cover;border-radius:8px;border:1px solid var(--line)" />
+      <figcaption style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);margin-top:11px">Actual stock, a recent pop-up — alocasias, snake plants, marble queen, anthurium</figcaption>
+    </figure>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px">
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">M</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Monstera deliciosa</span>
+          </div>
+          <span style="position:absolute;top:14px;left:14px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 9px;border-radius:3px">New this week</span>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">Monstera Deliciosa</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">6&quot; nursery pot · bright indirect</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$28</div>
+            <button onClick="{{ add.monstera }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.monstera }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">A</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Alocasia micholitziana</span>
+          </div>
+          <span style="position:absolute;top:14px;left:14px;background:var(--accent);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 9px;border-radius:3px">Two left</span>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">Alocasia Frydek</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">4&quot; nursery pot · loves humidity</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$34</div>
+            <button onClick="{{ add.frydek }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.frydek }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">P</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Philodendron 'Birkin'</span>
+          </div>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">Philodendron Birkin</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">6&quot; nursery pot · easy keeper</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$26</div>
+            <button onClick="{{ add.birkin }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.birkin }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:var(--sage);display:flex;align-items:flex-end;padding:14px">
+          <img src="assets/plant-bird.jpg" alt="White Bird of Paradise in a 10-inch nursery pot" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 42%" />
+          <span style="position:absolute;top:14px;left:14px;background:var(--ink);color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 9px;border-radius:3px">Statement piece</span>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">White Bird of Paradise</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">10&quot; nursery pot · 4–5 ft tall</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$65</div>
+            <button onClick="{{ add.bird }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.bird }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">C</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Goeppertia orbifolia</span>
+          </div>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">Calathea Orbifolia</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">6&quot; nursery pot · medium light</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$32</div>
+            <button onClick="{{ add.orbifolia }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.orbifolia }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">Z</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Zamioculcas 'Raven'</span>
+          </div>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">ZZ Raven</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">6&quot; nursery pot · near-black foliage</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$38</div>
+            <button onClick="{{ add.raven }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.raven }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">F</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Ficus elastica 'Burgundy'</span>
+          </div>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">Rubber Tree 'Burgundy'</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">10&quot; nursery pot · full sun tolerant</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$55</div>
+            <button onClick="{{ add.rubber }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.rubber }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">E</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Epipremnum 'Marble Queen'</span>
+          </div>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">Marble Queen Pothos</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">6&quot; nursery pot · hard to kill</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$18</div>
+            <button onClick="{{ add.queen }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.queen }}</button>
+          </div>
+        </div>
+      </article>
+
+      <article style="background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="position:relative;height:250px;background:repeating-linear-gradient(135deg,#DCE8CE 0 11px,#CFE0BE 11px 22px);display:flex;align-items:flex-end;padding:14px">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none">
+            <span style="font-family:'DM Serif Display',serif;font-size:78px;line-height:0.8;color:rgba(22,33,15,0.17)">P</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(22,33,15,0.68);text-align:center;padding:0 14px">Philodendron erubescens</span>
+          </div>
+          <span style="position:absolute;top:14px;left:14px;background:var(--accent);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;padding:4px 9px;border-radius:3px">Rare</span>
+        </div>
+        <div style="padding:22px;display:flex;flex-direction:column;flex:1">
+          <h3 style="font-family:'DM Serif Display',serif;font-size:23px;line-height:1.15;margin:0 0 4px">Philodendron Pink Princess</h3>
+          <div style="font-size:13.5px;font-style:italic;color:var(--muted);margin-bottom:16px">4&quot; nursery pot · variegated</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto">
+            <div style="font-size:20px;font-weight:700">$72</div>
+            <button onClick="{{ add.pinkprincess }}" style="background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap" style-hover="background:var(--accent)">{{ label.pinkprincess }}</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div style="margin-top:26px;border:1px dashed var(--sage2);border-radius:8px;padding:26px 30px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;background:rgba(220,232,206,0.4)">
+      <p style="margin:0;font-size:16.5px;line-height:1.55;color:var(--deep);max-width:46em;text-wrap:pretty">Looking for something specific — a variegated something, a big floor plant, a particular pot? It can be sourced. Say what you're after.</p>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:9px">
+        <a href="#contact" style="background:var(--ink);color:var(--paper);border-radius:999px;padding:13px 24px;font-size:15px;font-weight:600;white-space:nowrap" style-hover="background:var(--accent);color:#fff;text-decoration:none">Request a plant</a>
+        <a href="sms:+14708880373" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap" style-hover="color:var(--ink)">or text (470) 888-0373</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── POP-UPS / FIND ────────────────────────────── -->
+  <section id="find" data-screen-label="Pop-Ups" style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,4vw,32px) 40px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Pop-ups &amp; markets</div>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 44px;max-width:20em">Where the cart shows up</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;align-items:stretch">
+      <div style="border:1px solid var(--line);border-radius:8px;padding:30px;background:#fff;display:flex;flex-direction:column">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Every Saturday</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:27px;line-height:1.15;margin:0 0 10px">Cartersville Farmers Market</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 20px;flex:1">8:00 am – 12:00 pm, downtown. Full cart of tropicals, seasonal color, and container consults on the spot.</p>
+        <a href="https://maps.app.goo.gl/4QwvWtYjnsBAgPQQ8" style="font-size:14.5px;font-weight:600" style-hover="text-decoration:none;color:var(--ink)">Get directions →</a>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:8px;padding:30px;background:#fff;display:flex;flex-direction:column">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Weekday mornings</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:27px;line-height:1.15;margin:0 0 10px">The Main Street Route</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 20px;flex:1">Watering and tending downtown accounts before the shops open. Flag the cart down — there are usually plants on it.</p>
+        <a href="#contact" style="font-size:14.5px;font-weight:600" style-hover="text-decoration:none;color:var(--ink)">Get on the route →</a>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:8px;padding:30px;background:#fff;display:flex;flex-direction:column">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Host a pop-up</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:27px;line-height:1.15;margin:0 0 10px">In Your Space</h3>
+        <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0 0 20px;flex:1">Restaurants, bars, and shops downtown host a plant pop-up to pull a new crowd in the door. No cost to the venue.</p>
+        <a href="#contact" style="font-size:14.5px;font-weight:600" style-hover="text-decoration:none;color:var(--ink)">Host one →</a>
+      </div>
+    </div>
+
+    <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;align-items:stretch">
+      <div style="background:var(--forest);border-radius:8px;padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:center;color:#E4EBDC">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Past pop-up</div>
+        <h3 style="font-family:'DM Serif Display',serif;font-size:clamp(26px,3vw,34px);line-height:1.12;margin:0 0 16px;color:#fff">Spring Plant Pop-Up at Elevate</h3>
+        <p style="font-size:16.5px;line-height:1.62;margin:0 0 26px;max-width:30em;text-wrap:pretty">Two afternoons of tropicals inside a downtown Cartersville bar. This is what hosting looks like: the cart comes to you, the plants sell themselves, and your regulars bring friends.</p>
+        <a href="https://www.instagram.com/the_rolling_root/" style="font-size:15px;font-weight:700;color:var(--gold);align-self:flex-start;border-bottom:1px solid var(--gold);padding-bottom:3px" style-hover="color:#fff;border-color:#fff;text-decoration:none">See dates on Instagram →</a>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:8px;background:#fff;padding:18px;display:flex;align-items:center;justify-content:center">
+        <img src="assets/popup-flier.jpg" alt="The Rolling Root Spring Plant Pop-Up Shop flier at Elevate, April 25 and May 2" style="display:block;width:100%;max-width:320px;height:auto;border-radius:4px" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ─────────────────────────────────────── -->
+  <section id="about" data-screen-label="About" style="background:var(--sage);margin-top:clamp(56px,8vw,96px);padding:clamp(56px,8vw,96px) 0">
+    <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,32px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(36px,5vw,70px);align-items:center">
+      <div style="position:relative">
+        <img src="assets/debbie.jpg" alt="Debbie Lee, owner of The Rolling Root" style="display:block;width:100%;height:clamp(320px,42vw,540px);object-fit:cover;object-position:center 22%;border-radius:6px" />
+        <div style="position:absolute;bottom:18px;left:18px;right:18px;background:rgba(22,33,15,0.86);backdrop-filter:blur(4px);border-radius:4px;padding:14px 18px">
+          <div style="font-size:15px;font-weight:700;color:#fff;line-height:1.3">Debbie Lee</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-top:5px">Owner · The Rolling Root</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--deep);margin-bottom:18px">Who's behind it</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,48px);line-height:1.04;letter-spacing:-0.02em;margin:0 0 26px;text-wrap:balance">Owner-operated, one block at a time.</h2>
+        <p style="font-size:clamp(16px,1.4vw,18px);line-height:1.68;color:var(--deep);margin:0 0 18px;max-width:36em;text-wrap:pretty">The Rolling Root is run by Debbie Lee, who lives within walking distance of the Public Square. Same person plants your containers, sources your tropicals, and shows up to water them — there's no crew, no dispatcher, and no account manager to call.</p>
+        <p style="font-size:clamp(16px,1.4vw,18px);line-height:1.68;color:var(--deep);margin:0 0 32px;max-width:36em;text-wrap:pretty">It started as a rolling cart of tropical houseplants for people who'd otherwise drive to Atlanta. The storefront accounts followed, because once one shop on the block looked tended, the ones beside it wanted the same.</p>
+        <blockquote style="margin:0;border-left:3px solid var(--gold);padding:4px 0 4px 24px;font-family:'DM Serif Display',serif;font-size:clamp(22px,2.2vw,26px);line-height:1.35;font-style:italic;color:var(--ink);max-width:26em">Let the beauty sell itself.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────── -->
+  <section id="contact" data-screen-label="Contact" style="max-width:1240px;margin:clamp(56px,8vw,96px) auto 0;padding:0 clamp(20px,4vw,32px) clamp(56px,8vw,96px)">
+    <div style="position:relative;background:var(--forest);border-radius:8px;padding:clamp(26px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(32px,4vw,64px);overflow:hidden">
+      <img src="assets/gold-leaf.webp" alt="" style="position:absolute;left:-14%;bottom:-24%;width:min(40%,420px);opacity:0.14;transform:rotate(-14deg);pointer-events:none" />
+      <div style="position:relative;color:#E4EBDC">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px">Get started</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(28px,3.6vw,42px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 20px;color:#fff;text-wrap:balance">Tell us about your space.</h2>
+        <p style="font-size:16.5px;line-height:1.65;margin:0 0 36px;max-width:28em;text-wrap:pretty">We'll walk your storefront, look at your light, and come back with a plan and a number. No charge for the walkthrough.</p>
+        <div style="display:grid;gap:18px;border-top:1px solid rgba(194,161,91,0.32);padding-top:28px">
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Call or text</div>
+            <a href="tel:+14708880373" style="font-size:19px;font-weight:600;color:#fff" style-hover="color:var(--gold);text-decoration:none">(470) 888-0373</a>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Email</div>
+            <a href="mailto:therollingroot@gmail.com" style="font-size:19px;font-weight:600;color:#fff" style-hover="color:var(--gold);text-decoration:none">therollingroot@gmail.com</a>
+          </div>
+          <div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Service area</div>
+            <div style="font-size:16px;line-height:1.5">Downtown Cartersville first · Bartow County · north metro by request</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="position:relative;background:var(--paper);border-radius:6px;padding:clamp(24px,3vw,38px)">
+        <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;justify-content:center;height:100%;min-height:420px;text-align:center">
+            <div style="font-family:'DM Serif Display',serif;font-size:34px;line-height:1.1;margin-bottom:14px">Your email is drafted.</div>
+            <p style="font-size:16px;line-height:1.6;color:var(--muted);margin:0 0 26px">Hit send in your mail app and you'll hear back within a day. Prefer to talk? Text (470) 888-0373.</p>
+            <button onClick="{{ resetContact }}" style="align-self:center;background:transparent;border:1px solid var(--line);border-radius:999px;padding:12px 24px;font-size:14.5px;font-weight:600;color:var(--deep);cursor:pointer" style-hover="border-color:var(--ink)">Start over</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ true }}">
+          <div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:16px">
+              <label style="display:block">
+                <span style="display:block;font-size:12.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Your name</span>
+                <input value="{{ f.name }}" onChange="{{ on.name }}" placeholder="Jordan Ellis" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:13px 14px;font-size:15px;color:var(--ink)" />
+              </label>
+              <label style="display:block">
+                <span style="display:block;font-size:12.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Business or home</span>
+                <input value="{{ f.business }}" onChange="{{ on.business }}" placeholder="Cafe, 12 N Public Sq" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:13px 14px;font-size:15px;color:var(--ink)" />
+              </label>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:22px">
+              <label style="display:block">
+                <span style="display:block;font-size:12.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Email</span>
+                <input value="{{ f.email }}" onChange="{{ on.email }}" placeholder="you@business.com" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:13px 14px;font-size:15px;color:var(--ink)" />
+              </label>
+              <label style="display:block">
+                <span style="display:block;font-size:12.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Phone</span>
+                <input value="{{ f.phone }}" onChange="{{ on.phone }}" placeholder="(470) 555-0100" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:13px 14px;font-size:15px;color:var(--ink)" />
+              </label>
+            </div>
+            <div style="margin-bottom:22px">
+              <span style="display:block;font-size:12.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);margin-bottom:11px">What are you interested in?</span>
+              <div style="display:flex;flex-wrap:wrap;gap:9px">
+                <button onClick="{{ toggle.account }}" style="border:1px solid var(--line);background:{{ chipBg.account }};color:{{ chipFg.account }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Main Street account</button>
+                <button onClick="{{ toggle.containers }}" style="border:1px solid var(--line);background:{{ chipBg.containers }};color:{{ chipFg.containers }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Container gardens</button>
+                <button onClick="{{ toggle.baskets }}" style="border:1px solid var(--line);background:{{ chipBg.baskets }};color:{{ chipFg.baskets }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Hanging baskets</button>
+                <button onClick="{{ toggle.interior }}" style="border:1px solid var(--line);background:{{ chipBg.interior }};color:{{ chipFg.interior }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Interior tropicals</button>
+                <button onClick="{{ toggle.route }}" style="border:1px solid var(--line);background:{{ chipBg.route }};color:{{ chipFg.route }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Watering route</button>
+                <button onClick="{{ toggle.delivery }}" style="border:1px solid var(--line);background:{{ chipBg.delivery }};color:{{ chipFg.delivery }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Pick-up &amp; delivery</button>
+                <button onClick="{{ toggle.event }}" style="border:1px solid var(--line);background:{{ chipBg.event }};color:{{ chipFg.event }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Event or pop-up</button>
+                <button onClick="{{ toggle.residential }}" style="border:1px solid var(--line);background:{{ chipBg.residential }};color:{{ chipFg.residential }};border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer">Residential</button>
+              </div>
+            </div>
+            <label style="display:block;margin-bottom:24px">
+              <span style="display:block;font-size:12.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Tell us about the space</span>
+              <textarea value="{{ f.message }}" onChange="{{ on.message }}" rows="4" placeholder="Two planters out front, a lobby with west-facing windows, and a patio that needs something tall in the corner." style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:13px 14px;font-size:15px;line-height:1.55;color:var(--ink);resize:vertical"></textarea>
+            </label>
+            <a href="{{ contactHref }}" onClick="{{ submitContact }}" style="display:block;text-align:center;background:var(--ink);color:var(--paper);border-radius:999px;padding:16px;font-size:16px;font-weight:700" style-hover="background:var(--accent);color:#fff;text-decoration:none">Send it over</a>
+            <p style="font-size:13px;line-height:1.5;color:var(--muted);margin:14px 0 0;text-align:center">Opens your mail app with everything filled in. Nothing is stored on this site.</p>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────── -->
+  <footer style="border-top:1px solid var(--line);padding:56px 0 44px">
+    <div style="max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,32px);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px;align-items:start">
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:30px;line-height:1;margin-bottom:12px">The Rolling Root</div>
+        <p style="font-size:14.5px;line-height:1.6;color:var(--muted);margin:0;max-width:26em">Premier plant pick-up &amp; delivery service · Custom container garden creations. Serving Main Street, Cartersville, Georgia.</p>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Site</div>
+        <div style="display:grid;gap:8px;font-size:14.5px">
+          <a href="#services" style="color:var(--deep)">Services</a>
+          <a href="#mainstreet" style="color:var(--deep)">Main Street</a>
+          <a href="#shop" style="color:var(--deep)">Shop tropicals</a>
+          <a href="#find" style="color:var(--deep)">Pop-ups</a>
+          <a href="#contact" style="color:var(--deep)">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Reach us</div>
+        <div style="display:grid;gap:8px;font-size:14.5px">
+          <a href="tel:+14708880373" style="color:var(--deep)">(470) 888-0373</a>
+          <a href="mailto:therollingroot@gmail.com" style="color:var(--deep)">therollingroot@gmail.com</a>
+          <a href="https://www.instagram.com/the_rolling_root/" style="color:var(--deep)">@the_rolling_root</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Hours</div>
+        <div style="font-size:14.5px;line-height:1.7;color:var(--deep)">Mon–Fri, 4 am route<br />Sat, market 8–12<br />Sun, resting</div>
+      </div>
+    </div>
+    <div style="max-width:1240px;margin:44px auto 0;padding:0 clamp(20px,4vw,32px);font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted)">© 2026 The Rolling Root · Owner-operated in Cartersville, GA</div>
+  </footer>
+
+  <!-- ── CART DRAWER ───────────────────────────────── -->
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60;display:flex;justify-content:flex-end">
+      <div onClick="{{ closeDrawer }}" style="position:absolute;inset:0;background:rgba(14,26,11,0.46)"></div>
+      <aside style="position:relative;width:440px;max-width:94vw;height:100%;background:var(--paper);box-shadow:-18px 0 50px rgba(14,26,11,0.24);display:flex;flex-direction:column;transform:translateX(0)">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 26px;border-bottom:1px solid var(--line)">
+          <div>
+            <div style="font-family:'DM Serif Display',serif;font-size:24px;line-height:1.1">{{ drawerTitle }}</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:3px">{{ cartSummary }}</div>
+          </div>
+          <button onClick="{{ closeDrawer }}" style="background:transparent;border:1px solid var(--line);border-radius:999px;width:34px;height:34px;font-size:17px;color:var(--deep);cursor:pointer;line-height:1" style-hover="border-color:var(--ink)">×</button>
+        </div>
+
+        <sc-if value="{{ stepCart }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1;overflow-y:auto;padding:8px 26px">
+            <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:60px 0;text-align:center">
+                <p style="font-size:15.5px;line-height:1.6;color:var(--muted);margin:0">Your cart is empty. Add a few tropicals and they'll be set aside for you.</p>
+              </div>
+            </sc-if>
+            <sc-for list="{{ cartItems }}" as="it" hint-placeholder-count="0">
+              <div style="display:flex;gap:14px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)">
+                <div style="width:56px;height:56px;flex:none;border-radius:4px;background:repeating-linear-gradient(135deg,#DCE8CE 0 8px,#CFE0BE 8px 16px)"></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:15px;font-weight:600;line-height:1.3">{{ it.name }}</div>
+                  <div style="font-size:13px;color:var(--muted);margin-top:2px">{{ it.size }} · {{ it.priceStr }}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:999px;padding:3px;background:#fff">
+                  <button onClick="{{ it.dec }}" style="background:transparent;border:none;width:26px;height:26px;font-size:15px;color:var(--deep);cursor:pointer;line-height:1">−</button>
+                  <span style="min-width:20px;text-align:center;font-size:14px;font-weight:700">{{ it.qty }}</span>
+                  <button onClick="{{ it.inc }}" style="background:transparent;border:none;width:26px;height:26px;font-size:15px;color:var(--deep);cursor:pointer;line-height:1">+</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border-top:1px solid var(--line);padding:22px 26px 26px;background:#fff">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+              <span style="font-size:14px;font-weight:600;color:var(--muted)">Subtotal</span>
+              <span style="font-family:'DM Serif Display',serif;font-size:30px">{{ subtotalStr }}</span>
+            </div>
+            <p style="font-size:13px;line-height:1.55;color:var(--muted);margin:0 0 16px">Downtown pickup is free. Local delivery in Bartow County is $15.</p>
+            <button onClick="{{ goCheckout }}" style="display:block;width:100%;background:var(--ink);color:var(--paper);border:none;border-radius:999px;padding:15px;font-size:15.5px;font-weight:700;cursor:pointer" style-hover="background:var(--accent);color:#fff">Checkout</button>
+            <a href="sms:+14708880373" style="display:block;text-align:center;font-size:14px;font-weight:600;margin-top:12px">Or text the list</a>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ stepCheckout }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow-y:auto;padding:22px 26px">
+            <div style="margin-bottom:22px">
+              <span style="display:block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">How do you want it?</span>
+              <div style="display:grid;gap:9px">
+                <button onClick="{{ setPickup }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;background:{{ pickupBg }};color:{{ pickupFg }};border:1px solid {{ pickupBorder }};border-radius:6px;padding:14px 16px;font-size:14.5px;font-weight:600;cursor:pointer">
+                  <span>Pickup — Saturday market, 8–12</span>
+                  <span>Free</span>
+                </button>
+                <button onClick="{{ setDelivery }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;background:{{ deliveryBg }};color:{{ deliveryFg }};border:1px solid {{ deliveryBorder }};border-radius:6px;padding:14px 16px;font-size:14.5px;font-weight:600;cursor:pointer">
+                  <span>Local delivery — Bartow County</span>
+                  <span>$15</span>
+                </button>
+              </div>
+            </div>
+
+            <div style="display:grid;gap:13px;margin-bottom:22px">
+              <label style="display:block">
+                <span style="display:block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Name</span>
+                <input value="{{ o.name }}" onChange="{{ onOrder.name }}" placeholder="Jordan Ellis" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:var(--ink)" />
+              </label>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:13px">
+                <label style="display:block">
+                  <span style="display:block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Email</span>
+                  <input value="{{ o.email }}" onChange="{{ onOrder.email }}" placeholder="you@email.com" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:var(--ink)" />
+                </label>
+                <label style="display:block">
+                  <span style="display:block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Phone</span>
+                  <input value="{{ o.phone }}" onChange="{{ onOrder.phone }}" placeholder="(470) 555-0100" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:var(--ink)" />
+                </label>
+              </div>
+              <sc-if value="{{ isDelivery }}" hint-placeholder-val="{{ false }}">
+                <label style="display:block">
+                  <span style="display:block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Delivery address</span>
+                  <input value="{{ o.address }}" onChange="{{ onOrder.address }}" placeholder="12 N Public Sq, Cartersville, GA" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:var(--ink)" />
+                </label>
+              </sc-if>
+              <label style="display:block">
+                <span style="display:block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Notes</span>
+                <input value="{{ o.notes }}" onChange="{{ onOrder.notes }}" placeholder="Leave at the side door, please" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:var(--ink)" />
+              </label>
+            </div>
+
+            <div style="border:1px solid var(--line);border-radius:6px;background:#fff;padding:18px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+                <span style="font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Payment</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;background:var(--sage);color:var(--deep);padding:4px 8px;border-radius:3px">Square — pending setup</span>
+              </div>
+              <div style="display:grid;gap:11px">
+                <input placeholder="Card number" disabled="disabled" style="width:100%;box-sizing:border-box;background:#F2F0E8;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:#9AA694" />
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:11px">
+                  <input placeholder="MM / YY" disabled="disabled" style="width:100%;box-sizing:border-box;background:#F2F0E8;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:#9AA694" />
+                  <input placeholder="CVC" disabled="disabled" style="width:100%;box-sizing:border-box;background:#F2F0E8;border:1px solid var(--line);border-radius:4px;padding:12px 13px;font-size:14.5px;color:#9AA694" />
+                </div>
+              </div>
+              <p style="font-size:12.5px;line-height:1.5;color:var(--muted);margin:12px 0 0">Card payment goes live once Square is connected. For now the order is sent straight through and you pay at pickup or on delivery.</p>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--line);padding:20px 26px 26px;background:#fff">
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:5px"><span>Subtotal</span><span>{{ subtotalStr }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:10px"><span>{{ shippingLabel }}</span><span>{{ shippingStr }}</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;border-top:1px solid var(--line);padding-top:12px">
+              <span style="font-size:14px;font-weight:700">Total</span>
+              <span style="font-family:'DM Serif Display',serif;font-size:30px">{{ totalStr }}</span>
+            </div>
+            <a href="{{ orderHref }}" onClick="{{ placeOrder }}" style="display:block;text-align:center;background:var(--ink);color:var(--paper);border-radius:999px;padding:15px;font-size:15.5px;font-weight:700" style-hover="background:var(--accent);color:#fff;text-decoration:none">Place order · {{ totalStr }}</a>
+            <button onClick="{{ backToCart }}" style="display:block;width:100%;background:transparent;border:none;font-size:14px;font-weight:600;color:var(--deep);margin-top:12px;cursor:pointer">← Back to cart</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ stepDone }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:34px 30px;text-align:center">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">Order {{ orderNo }}</div>
+            <div style="font-family:'DM Serif Display',serif;font-size:32px;line-height:1.12;margin-bottom:14px">Got it — these are set aside.</div>
+            <p style="font-size:15.5px;line-height:1.62;color:var(--muted);margin:0 0 8px">{{ doneNote }}</p>
+            <p style="font-size:15.5px;line-height:1.62;color:var(--muted);margin:0 0 28px">You'll get a text to confirm within a few hours.</p>
+            <div style="border:1px solid var(--line);border-radius:6px;background:#fff;padding:18px;text-align:left;margin-bottom:24px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline">
+                <span style="font-size:13.5px;font-weight:700;color:var(--muted)">Total due at handoff</span>
+                <span style="font-family:'DM Serif Display',serif;font-size:26px">{{ totalStr }}</span>
+              </div>
+            </div>
+            <button onClick="{{ newOrder }}" style="align-self:center;background:transparent;border:1px solid var(--line);border-radius:999px;padding:12px 24px;font-size:14.5px;font-weight:600;color:var(--deep);cursor:pointer" style-hover="border-color:var(--ink)">Keep shopping</button>
+          </div>
+        </sc-if>
+      </aside>
+    </div>
+  </sc-if>
+
+</div>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0E1A0B"></rect><circle cx="50" cy="50" r="27" fill="none" stroke="#C2A15B" stroke-width="1.5"></circle><text x="50" y="59" font-family="Georgia,serif" font-size="23" fill="#F7F4EC" text-anchor="middle">RR</text></svg></template>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;gold&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#C2A15B&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#C2A15B&quot;,&quot;#D4B872&quot;,&quot;#A9C08E&quot;,&quot;#E8D9A8&quot;],&quot;section&quot;:&quot;Brand&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#B5643C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#B5643C&quot;,&quot;#7A8F4E&quot;,&quot;#1F4B3F&quot;,&quot;#C08A2E&quot;],&quot;section&quot;:&quot;Brand&quot;},&quot;showServicePricing&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  catalog = {
+    monstera: { name: 'Monstera Deliciosa', size: '6" pot', price: 28 },
+    frydek: { name: 'Alocasia Frydek', size: '4" pot', price: 34 },
+    birkin: { name: 'Philodendron Birkin', size: '6" pot', price: 26 },
+    bird: { name: 'White Bird of Paradise', size: '10" pot', price: 65 },
+    orbifolia: { name: 'Calathea Orbifolia', size: '6" pot', price: 32 },
+    raven: { name: 'ZZ Raven', size: '6" pot', price: 38 },
+    rubber: { name: "Rubber Tree 'Burgundy'", size: '10" pot', price: 55 },
+    queen: { name: 'Marble Queen Pothos', size: '6" pot', price: 18 },
+    pinkprincess: { name: 'Philodendron Pink Princess', size: '4" pot', price: 72 }
+  };
+
+  interests = {
+    account: 'Main Street account',
+    containers: 'Container gardens',
+    baskets: 'Hanging baskets',
+    interior: 'Interior tropicals',
+    route: 'Watering route',
+    delivery: 'Pick-up & delivery',
+    event: 'Event or pop-up',
+    residential: 'Residential'
+  };
+
+  state = {
+    cart: this.loadCart(),
+    drawerOpen: false,
+    step: 'cart',
+    fulfillment: 'pickup',
+    orderNo: '',
+    o: { name: '', email: '', phone: '', address: '', notes: '' },
+    picked: {},
+    contactSent: false,
+    f: { name: '', business: '', email: '', phone: '', message: '' }
+  };
+
+  loadCart() {
+    try { return JSON.parse(localStorage.getItem('rr_cart_v1')) || {}; } catch (e) { return {}; }
+  }
+  saveCart() {
+    try { localStorage.setItem('rr_cart_v1', JSON.stringify(this.state.cart)); } catch (e) {}
+  }
+  componentDidMount() { this.syncAccent(); }
+  componentDidUpdate() { this.syncAccent(); this.saveCart(); }
+  syncAccent() {
+    const a = this.props.accent;
+    if (a) document.body.style.setProperty('--accent', a);
+    const g = this.props.gold;
+    if (g) document.body.style.setProperty('--gold', g);
+  }
+
+  showDrawer(extra) {
+    this.setState(Object.assign({ drawerOpen: true }, extra || {}));
+  }
+
+  bump(id, d) {
+    this.setState(s => {
+      const cart = Object.assign({}, s.cart);
+      const next = (cart[id] || 0) + d;
+      if (next <= 0) delete cart[id]; else cart[id] = next;
+      return { cart, step: Object.keys(cart).length ? s.step : 'cart' };
+    });
+  }
+
+  renderVals() {
+    const { cart, picked, f, o, step, fulfillment } = this.state;
+    const ids = Object.keys(this.catalog);
+
+    const add = {}, label = {};
+    ids.forEach(id => {
+      add[id] = () => { this.bump(id, 1); this.showDrawer({ step: 'cart' }); };
+      label[id] = cart[id] ? 'In cart · ' + cart[id] : 'Add to cart';
+    });
+
+    const cartItems = ids.filter(id => cart[id]).map(id => ({
+      id,
+      name: this.catalog[id].name,
+      size: this.catalog[id].size,
+      priceStr: '$' + this.catalog[id].price,
+      qty: cart[id],
+      inc: () => this.bump(id, 1),
+      dec: () => this.bump(id, -1)
+    }));
+
+    const count = cartItems.reduce((n, i) => n + i.qty, 0);
+    const subtotal = cartItems.reduce((n, i) => n + i.qty * this.catalog[i.id].price, 0);
+    const isDelivery = fulfillment === 'delivery';
+    const shipping = isDelivery ? 15 : 0;
+    const total = subtotal + shipping;
+
+    const lines = cartItems.map(i => i.qty + ' × ' + i.name + ' (' + i.size + ') — $' + (i.qty * this.catalog[i.id].price));
+    const orderHref = 'mailto:therollingroot@gmail.com?subject=' +
+      encodeURIComponent('New order — The Rolling Root') + '&body=' +
+      encodeURIComponent('Order:\n' + lines.join('\n') +
+        '\n\nSubtotal: $' + subtotal +
+        '\n' + (isDelivery ? 'Local delivery: $15' : 'Pickup at Saturday market: free') +
+        '\nTotal: $' + total +
+        '\n\nName: ' + o.name + '\nEmail: ' + o.email + '\nPhone: ' + o.phone +
+        (isDelivery ? '\nAddress: ' + o.address : '') +
+        '\nNotes: ' + o.notes + '\n');
+
+    const chipBg = {}, chipFg = {}, toggle = {};
+    Object.keys(this.interests).forEach(k => {
+      chipBg[k] = picked[k] ? '#16210F' : '#ffffff';
+      chipFg[k] = picked[k] ? '#F7F4EC' : '#61705A';
+      toggle[k] = () => this.setState(s => ({ picked: Object.assign({}, s.picked, { [k]: !s.picked[k] }) }));
+    });
+
+    const chosen = Object.keys(this.interests).filter(k => picked[k]).map(k => this.interests[k]);
+    const contactHref = 'mailto:therollingroot@gmail.com?subject=' +
+      encodeURIComponent('Walkthrough request' + (f.business ? ' — ' + f.business : '')) + '&body=' +
+      encodeURIComponent('Name: ' + f.name + '\nBusiness: ' + f.business +
+        '\nEmail: ' + f.email + '\nPhone: ' + f.phone +
+        '\nInterested in: ' + (chosen.length ? chosen.join(', ') : '(not specified)') +
+        '\n\n' + f.message + '\n');
+
+    const on = {};
+    ['name', 'business', 'email', 'phone', 'message'].forEach(k => {
+      on[k] = e => {
+        const v = e.target.value;
+        this.setState(s => ({ f: Object.assign({}, s.f, { [k]: v }) }));
+      };
+    });
+    const onOrder = {};
+    ['name', 'email', 'phone', 'address', 'notes'].forEach(k => {
+      onOrder[k] = e => {
+        const v = e.target.value;
+        this.setState(s => ({ o: Object.assign({}, s.o, { [k]: v }) }));
+      };
+    });
+
+    const sel = { bg: '#16210F', fg: '#F7F4EC', border: '#16210F' };
+    const un = { bg: '#ffffff', fg: '#26361F', border: '#CBD7BC' };
+    const pk = isDelivery ? un : sel;
+    const dl = isDelivery ? sel : un;
+
+    return {
+      add, label, cartItems, on, onOrder, toggle, chipBg, chipFg, contactHref, orderHref,
+      f, o, isDelivery,
+      stockDate: 'Aug 27, 2026',
+      showPricing: this.props.showServicePricing ?? true,
+      drawerOpen: this.state.drawerOpen,
+      openDrawer: () => this.showDrawer(),
+      closeDrawer: () => this.setState({ drawerOpen: false }),
+      drawerTitle: step === 'checkout' ? 'Checkout' : step === 'done' ? 'Order placed' : 'Your cart',
+      stepCart: step === 'cart',
+      stepCheckout: step === 'checkout',
+      stepDone: step === 'done',
+      goCheckout: () => { if (count) this.setState({ step: 'checkout' }); },
+      backToCart: () => this.setState({ step: 'cart' }),
+      placeOrder: () => setTimeout(() => this.setState({
+        step: 'done',
+        orderNo: 'RR-' + String(1000 + Math.floor(Math.random() * 9000))
+      }), 250),
+      newOrder: () => this.setState({ cart: {}, step: 'cart', drawerOpen: false }),
+      orderNo: this.state.orderNo,
+      doneNote: isDelivery
+        ? 'They\'ll be delivered to ' + (o.address || 'your address') + ' and set where you want them.'
+        : 'They\'ll be labeled with your name at the Saturday market tent, 8–12.',
+      setPickup: () => this.setState({ fulfillment: 'pickup' }),
+      setDelivery: () => this.setState({ fulfillment: 'delivery' }),
+      pickupBg: pk.bg, pickupFg: pk.fg, pickupBorder: pk.border,
+      deliveryBg: dl.bg, deliveryFg: dl.fg, deliveryBorder: dl.border,
+      hasCart: count > 0,
+      showCartBar: count > 0 && !this.state.drawerOpen,
+      cartEmpty: count === 0,
+      cartCount: count,
+      subtotalStr: '$' + subtotal,
+      shippingLabel: isDelivery ? 'Local delivery' : 'Downtown pickup',
+      shippingStr: isDelivery ? '$15' : 'Free',
+      totalStr: '$' + total,
+      cartSummary: count === 0 ? 'Empty for now' : count + (count === 1 ? ' plant' : ' plants') + ' · $' + subtotal,
+      contactSent: this.state.contactSent,
+      contactOpen: !this.state.contactSent,
+      submitContact: () => setTimeout(() => this.setState({ contactSent: true }), 250),
+      resetContact: () => this.setState({ contactSent: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
